@@ -1,0 +1,36 @@
+---
+# tasks file for daixijun.php-yaf
+- name: Verify yaf extension is installed
+  stat:
+    path: "{{ php_extension_dir }}/yaf.so"
+  register: yaf_installed_stat
+
+- name: Unarchive php-yaf {{ php_yaf_version }} from url
+  unarchive:
+    src: "{{ php_yaf_download_url }}"
+    dest: /usr/local/src/
+    remote_src: true
+    creates: /usr/local/src/yaf-{{ php_yaf_version }}
+  when:
+    - not yaf_installed_stat.stat.exists
+
+- name: Install
+  command: "{{ item }}"
+  args:
+    chdir: "/usr/local/src/yaf-{{ php_yaf_version }}"
+  loop:
+    - /usr/local/php/bin/phpize
+    - ./configure --enable-yaf --with-php-config=/usr/local/php/bin/php-config
+    - make
+    - make install
+  when:
+    - not yaf_installed_stat.stat.exists
+  tags:
+    - skip_ansible_lint
+
+- name: Generate configuration file
+  copy:
+    content: "extension=yaf.so"
+    dest: /usr/local/php/etc/php.d/yaf.ini
+  notify:
+    - restart php-fpm

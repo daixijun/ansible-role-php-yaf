@@ -1,0 +1,4 @@
+---
+# defaults file for daixijun.php-yaf
+php_yaf_version: 3.0.8
+php_yaf_download_url: http://pecl.php.net/get/yaf-{{ php_yaf_version }}.tgz
