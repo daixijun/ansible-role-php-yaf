@@ -2,4 +2,5 @@
 - name: Converge
   hosts: all
   roles:
+    - role: daixijun.php
     - role: daixijun.php-yaf

@@ -10,6 +10,7 @@ before_script:
   - cd ../
   - mv ansible-role-php-yaf daixijun.php-yaf
   - cd daixijun.php-yaf
+  - ansible-galaxy install daixijun.php --force --role-path=../
 
 install:
   - pip install ansible molecule docker
