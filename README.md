@@ -32,7 +32,7 @@ Example Playbook
 - hosts: servers
   roles:
     - role: daixijun.php
-    - role: daixijun.php-yaf
+    - role: daixijun.php_yaf
 ```
 
 License
