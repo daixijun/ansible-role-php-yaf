@@ -9,7 +9,7 @@
   unarchive:
     src: "{{ php_yaf_download_url }}"
     dest: /usr/local/src/
-    remote_src: true
+    remote_src: "{{ php_yaf_remote_src }}"
     creates: /usr/local/src/yaf-{{ php_yaf_version }}
   when:
     - not yaf_installed_stat.stat.exists
