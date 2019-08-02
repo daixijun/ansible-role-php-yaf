@@ -32,5 +32,6 @@
   copy:
     content: "extension=yaf.so"
     dest: /usr/local/php/etc/php.d/yaf.ini
+    mode: '644'
   notify:
     - restart php-fpm
