@@ -16,7 +16,7 @@
 - name: Download php yaf package
   get_url:
     url: "{{ php_yaf_download_url }}"
-    dest: /usr/local/src/
+    dest: "{{ role_path }}/files/"
   become: false
   run_once: true
   delegate_to: localhost
