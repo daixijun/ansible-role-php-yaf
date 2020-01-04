@@ -5,14 +5,34 @@
     path: "{{ php_extension_dir }}/yaf.so"
   register: yaf_installed_stat
 
-- name: Unarchive php-yaf {{ php_yaf_version }} from url
-  unarchive:
-    src: "{{ php_yaf_download_url }}"
+- name: Check php yaf package is already exists
+  stat:
+    path: "{{ role_path }}/files/{{ php_yaf_download_url | basename }}"
+  become: false
+  run_once: true
+  delegate_to: localhost
+  register: _php_yaf_package_stat
+
+- name: Download php yaf package
+  get_url:
+    url: "{{ php_yaf_download_url }}"
     dest: /usr/local/src/
-    remote_src: "{{ php_yaf_remote_src }}"
+  become: false
+  run_once: true
+  delegate_to: localhost
+  register: _php_yaf_package
+  when:
+    - not _php_yaf_package_stat.stat.exists
+    - not yaf_installed_stat.stat.exists
+
+- name: Unarchive php-yaf {{ php_yaf_version }}
+  unarchive:
+    src: "files/{{ php_yaf_download_url | basename }}"
+    dest: /usr/local/src/
+    remote_src: false
     creates: /usr/local/src/yaf-{{ php_yaf_version }}
   when:
-    - not yaf_installed_stat.stat.exists
+    - not yaf_installed_stat.stat.exists and (_php_yaf_package is not skipped or _php_yaf_package_stat.stat.exists)
 
 - name: Install
   command: "{{ item }}"
@@ -32,6 +52,6 @@
   copy:
     content: "extension=yaf.so"
     dest: /usr/local/php/etc/php.d/yaf.ini
-    mode: '644'
+    mode: "644"
   notify:
     - restart php-fpm
