@@ -1,0 +1,40 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Gather services
+      service_facts:
+
+    - name: Assert php-fpm service state
+      assert:
+        that:
+          - "'php-fpm.service' in ansible_facts.services"
+          - ansible_facts.services['php-fpm.service'].state == 'running'
+          - ansible_facts.services['php-fpm.service'].status == 'enabled'
+
+    - name: Stat yaf.so
+      stat:
+        path: "{{ ansible_local.php.extension_dir }}/yaf.so"
+      register: _yaf_so
+
+    - name: Assert yaf so
+      assert:
+        that:
+          - _yaf_so.stat.exists is defined and _yaf_so.stat.exists | bool
+          - _yaf_so.stat.pw_name == ansible_local.php.web_user
+          - _yaf_so.stat.gr_name == ansible_local.php.web_user
+
+    - name: Check yaf extension is loaded
+      command: /usr/local/php/bin/php -m | grep yaf
+      become: true
+      changed_when: false
+      become_user: "{{ ansible_local.php.web_user }}"
+      register: _yaf_load
+
+    - name: Assert yaf extension is loaded
+      assert:
+        that:
+          - _yaf_load.rc == 0
+          - "'yaf' in _yaf_load.stdout"
