@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/daixijun/ansible-role-php-yaf/compare/v0.1.2...v0.1.3) (2020-03-30)
+
+
+### Bug Fixes
+
+* 关闭command模块warn信息 ([d0b070f](https://github.com/daixijun/ansible-role-php-yaf/commit/d0b070fac9c20bfe0f63aae4ac0f4af20ce9a1fa))
+* 切换php自定义变量为ansible_local facts ([9c647cf](https://github.com/daixijun/ansible-role-php-yaf/commit/9c647cf6bb1bd8fcb7bea87b5240228cec010ec2))
+
 ### [0.1.2](https://github.com/daixijun/ansible-role-php-yaf/compare/v0.1.1...v0.1.2) (2020-01-04)
 
 
