@@ -1,5 +1,5 @@
 ---
-name: ci
+name: build
 on: push
 jobs:
   test:
@@ -22,7 +22,7 @@ jobs:
       - name: Test with molecule
         run: |
           cd ..
-          cp -rf ansible-role-php-yaf daixijun.php-yaf
+          ln -sf ansible-role-php-yaf daixijun.php-yaf
           cd daixijun.php-yaf
           molecule test
       - name: Publish role to Galaxy
