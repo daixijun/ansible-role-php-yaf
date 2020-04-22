@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/daixijun/ansible-role-php-yaf/compare/v0.1.3...v0.1.4) (2020-04-22)
+
+
+### Bug Fixes
+
+* 修改安装包下载目录 ([184484b](https://github.com/daixijun/ansible-role-php-yaf/commit/184484b7c550b7b210cc98cd5eacd674b08a402e))
+
 ### [0.1.3](https://github.com/daixijun/ansible-role-php-yaf/compare/v0.1.2...v0.1.3) (2020-03-30)
 
 
